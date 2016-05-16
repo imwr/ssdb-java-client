@@ -47,3 +47,14 @@ if (!resp.ok()) {
     log.info("name=" + resp.asString());
 }
 ```
+
+SSDBClient Spring 配置
+----------------
+```
+<bean id="ssdbClient" class="org.nutz.ssdb4j.SSDBClient" destroy-method="close">
+	<constructor-arg name="host" value="127.0.0.1" />
+	<constructor-arg name="port" value="8888" />
+	<constructor-arg name="timeoutSeconds" value="3000" />
+	<constructor-arg name="pass" value="" />
+</bean>
+```
