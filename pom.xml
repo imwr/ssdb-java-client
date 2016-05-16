@@ -37,6 +37,16 @@
 			<artifactId>nutz</artifactId>
 			<version>1.r.56</version>
 		</dependency>
+		<dependency>
+			<artifactId>slf4j-api</artifactId>
+			<groupId>org.slf4j</groupId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.2.6.RELEASE</version>
+		</dependency>
 	</dependencies>
 	<description>Another Java Driver for ssdb</description>
 	<scm>
