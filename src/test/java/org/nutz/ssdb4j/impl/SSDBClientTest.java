@@ -1,5 +1,8 @@
 package org.nutz.ssdb4j.impl;
 
+import java.io.IOException;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.builders.JUnit4Builder;
@@ -22,5 +25,10 @@ public class SSDBClientTest extends JUnit4Builder {
 	public void testTest() {
 		System.out.println(ssdbClient.set("ssdbClient-test", "ssdbClient-test"));
 		System.out.println(ssdbClient.get("ssdbClient-test"));
+	}
+
+	@After
+	public void after() throws IOException {
+		ssdbClient.close();
 	}
 }

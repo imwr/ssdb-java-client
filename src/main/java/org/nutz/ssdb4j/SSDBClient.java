@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.nutz.ssdb4j.impl.BatchClient;
 import org.nutz.ssdb4j.impl.DefaultObjectConv;
 import org.nutz.ssdb4j.impl.SocketSSDBStream;
-import org.nutz.ssdb4j.pool.Pools;
+import org.nutz.ssdb4j.pool2.Pool2s;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.KeyValue;
 import org.nutz.ssdb4j.spi.ObjectConv;
@@ -33,7 +33,7 @@ public class SSDBClient {
 	protected ObjectConv conv;
 
 	public SSDBClient(String host, int port, int timeoutSeconds, String pass) {
-		this.stream = Pools.pool(host, port, timeoutSeconds, null, isBlank(pass) ? null : pass.getBytes());
+		this.stream = Pool2s.pool(host, port, timeoutSeconds, null, isBlank(pass) ? null : pass.getBytes());
 		this.conv = DefaultObjectConv.me;
 	}
 
@@ -990,21 +990,22 @@ public class SSDBClient {
 		return null;
 	}
 
-	public Response version() {
+	public String version() {
 		try {
-			return req(Cmd.version);
+			return req(Cmd.version).asString();
 		} catch (Exception e) {
 			LOGGER.error("ssdb操作发生异常", e);
+			;
 		}
 		return null;
 	}
 
-	public Response ping() {
+	public boolean ping() {
 		try {
-			return req(Cmd.ping);
+			return req(Cmd.ping).ok();
 		} catch (Exception e) {
 			LOGGER.error("ssdb操作发生异常", e);
 		}
-		return null;
+		return false;
 	}
 }
