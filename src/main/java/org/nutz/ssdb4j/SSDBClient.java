@@ -385,6 +385,24 @@ public class SSDBClient {
 		return null;
 	}
 
+	public List<KeyValue> zpopfront(Object key, int limit) {
+		try {
+			return req(Cmd.zpopfront, bytes(key), Integer.toString(limit).getBytes()).asKeyScores();
+		} catch (Exception e) {
+			LOGGER.error("ssdb操作发生异常", e);
+		}
+		return null;
+	}
+
+	public List<KeyValue> zpopback(Object key, int limit) {
+		try {
+			return req(Cmd.zpopback, bytes(key), Integer.toString(limit).getBytes()).asKeyScores();
+		} catch (Exception e) {
+			LOGGER.error("ssdb操作发生异常", e);
+		}
+		return null;
+	}
+
 	public int qsize(Object key) {
 		try {
 			return req(Cmd.qsize, bytes(key)).asInt();

@@ -45,6 +45,8 @@ public class Cmd {
 	public static final Cmd zrscan = new Cmd("zrscan", false, true);
 	public static final Cmd zrange = new Cmd("zrange", false, true);
 	public static final Cmd zrrange = new Cmd("zrrange", false, true);
+	public static final Cmd zpopfront = new Cmd("zpop_front", false, true);
+	public static final Cmd zpopback = new Cmd("zpop_back", false, true);
 	public static final Cmd multi_zset = new Cmd("multi_zset", false, false);
 	public static final Cmd multi_zget = new Cmd("multi_zget", true, false);
 	public static final Cmd multi_zdel = new Cmd("multi_zdel", false, false);
