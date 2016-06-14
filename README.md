@@ -3,7 +3,6 @@ IMWR changed
 
 + 添加SSDBClient客户端（Spring配置，commons-pool2 线程池，异常捕获，结果转换为基本数据类型），Spring 配置如下
 
-----------------
 ```
 <bean id="ssdbClient" class="org.nutz.ssdb4j.SSDBClient" destroy-method="close">
 	<constructor-arg name="host" value="127.0.0.1" />
