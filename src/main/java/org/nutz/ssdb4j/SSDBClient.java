@@ -596,30 +596,35 @@ public class SSDBClient {
 		return 0;
 	}
 
-	public void flushdb(String type) {
+	public long flushdb(String type) {
 		if (type == null || type.length() == 0) {
-			flushdb_kv();
-			flushdb_hash();
-			flushdb_zset();
-			flushdb_list();
-		} else if ("kv".equals(type)) {
-			flushdb_kv();
-		} else if ("hash".equals(type)) {
-			flushdb_hash();
-		} else if ("zset".equals(type)) {
-			flushdb_zset();
-		} else if ("list".equals(type)) {
-			flushdb_list();
-		} else {
-			throw new IllegalArgumentException("not such flushdb mode=" + type);
+			long count = 0;
+			count += flushdb_kv();
+			count += flushdb_hash();
+			count += flushdb_zset();
+			count += flushdb_list();
+			return count;
 		}
+		if ("kv".equals(type)) {
+			return flushdb_kv();
+		}
+		if ("hash".equals(type)) {
+			return flushdb_hash();
+		}
+		if ("zset".equals(type)) {
+			return flushdb_zset();
+		}
+		if ("list".equals(type)) {
+			return flushdb_list();
+		}
+		throw new IllegalArgumentException("not such flushdb mode=" + type);
 	}
 
 	protected long flushdb_kv() {
 		long count = 0;
 		while (true) {
 			List<String> keys = keys("", "", 1000);
-			if (keys.isEmpty())
+			if (null == keys || keys.isEmpty())
 				return count;
 			count += keys.size();
 			multiDel(keys.toArray());
@@ -630,7 +635,7 @@ public class SSDBClient {
 		long count = 0;
 		while (true) {
 			List<KeyValue> keys = hlist("", "", 1000);
-			if (keys.isEmpty())
+			if (null == keys || keys.isEmpty())
 				return count;
 			count += keys.size();
 			for (KeyValue key : keys) {
@@ -643,7 +648,7 @@ public class SSDBClient {
 		long count = 0;
 		while (true) {
 			List<String> keys = zlist("", "", 1000);
-			if (keys.isEmpty())
+			if (null == keys || keys.isEmpty())
 				return count;
 			count += keys.size();
 			for (String key : keys) {
@@ -656,7 +661,7 @@ public class SSDBClient {
 		long count = 0;
 		while (true) {
 			List<String> keys = qlist("", "", 1000);
-			if (keys.isEmpty())
+			if (null == keys || keys.isEmpty())
 				return count;
 			count += keys.size();
 			for (String key : keys) {
